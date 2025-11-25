@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% import 'macros.html' as macros %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+  <h2>Recommendations for you</h2>
+  <div class="scroll-wrapper">
+    <div class="movie-list-horizontal">
+      {% for movie in recommendations %}
+        {{ macros.movie_item(movie) }}
+      {% endfor %}
+    </div>
+  </div>
+
+  <h2>Top rated</h2>
+  <div class="scroll-wrapper">
+    <div class="movie-list-horizontal">
+      {% for movie in top_rated_movies %}
+        {{ macros.movie_item(movie) }}
+      {% endfor %}
+    </div>
+  </div>
+
+  <h2>Recent released</h2>
+  <div class="scroll-wrapper">
+    <div class="movie-list-horizontal">
+      {% for movie in recent_movies %}
+        {{ macros.movie_item(movie) }}
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

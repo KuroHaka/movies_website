@@ -1,0 +1,56 @@
+<!doctype html>
+<title>{% block title %}{% endblock %} - The NoSQL Movie DB</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<body>
+
+<div class="metrics-display">
+  <table>
+    <thead>
+      <tr>
+        <th><strong>Metrics:</strong></th>
+        <th>p90</th>
+        <th>p95</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for name, value in metrics.items() %}
+        <tr>
+          <td>{{ name }}</td>
+          <td>{{ '%0.2f' % (value[0] * 1000) }}ms</td>
+          <td>{{ '%0.2f' % (value[1] * 1000) }}ms</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<nav>
+  <h1><a href="/">The NoSQL Movie DB</a></h1>
+</nav>
+<section class="content">
+  <header>
+    <form action="/search">
+      <input name="query" type="text" placeholder="Search" />
+      <input type="submit" value="search" />
+    </form>
+
+    <div class="login-box">
+      {% if session and "username" in session %}
+        Current user : {{ session["username" ]}} <a href="{{ url_for('logout') }}">(Logout)</a>
+      {% else %}
+        <form action="{{ url_for('login') }}" method="POST">
+          UPC Username <input type="text" name="username">
+          <input type="submit" value="Login">
+        </form>
+      {% endif %}
+    </div>
+  </header>
+  {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+
+  {% block content %}{% endblock %}
+
+  </section>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>

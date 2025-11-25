@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% import 'macros.html' as macros %}
+
+{% block title %}Search results{% endblock %}
+
+{% block content %}
+
+  <h2>Results for "{{ request.args.get("query") }}"</h2>
+
+  <div class="search-layout">
+    <div class="search-results">
+      {% for movie in search_results %}
+        {{ macros.movie_item(movie) }}
+      {% endfor %}
+    </div>
+    <div class="search-facets">
+      <h3>Votes</h3>
+      {{ macros.facets(votes_facet, 'vote_average') }}
+
+      <h3>Release Year</h3>
+      {{ macros.facets(release_year_facet, 'release_date') }}
+
+      <h3>Genre</h3>
+      {{ macros.facets(genre_facet, 'genres') }}
+    </div>
+  </div>
+
+{% endblock %}
